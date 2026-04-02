@@ -1,0 +1,13 @@
+node_modules/
+dist/
+build/
+.temp/
+.cache/
+.DS_Store
+*.log
+.env
+.env.*
+!.env.example
+.firebase/
+firebase-debug.log*
+.firebaserc
