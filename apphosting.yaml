@@ -1,0 +1,13 @@
+kind: AppStack
+billingPlan: post-paid
+env:
+  - variable: ICLOUD_EMAIL
+    secret: ICLOUD_EMAIL
+  - variable: ICLOUD_PASSWORD
+    secret: ICLOUD_PASSWORD
+  - variable: NODE_ENV
+    value: production
+runConfig:
+  concurrency: 80
+  cpu: 1
+  memoryMiB: 512
