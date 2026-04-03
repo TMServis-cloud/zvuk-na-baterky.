@@ -650,6 +650,7 @@ const Calculator = () => {
   const [days, setDays] = useState(1);
   const [packageType, setPackageType] = useState("medium");
   const [delivery, setDelivery] = useState(false);
+  const [showForm, setShowForm] = useState(false);
 
   const prices = {
     mini: 1000,
@@ -687,7 +688,7 @@ const Calculator = () => {
       <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] ${colors.bgOpacity} blur-[150px] rounded-full transition-colors duration-500`} />
       
       <div className="max-w-4xl mx-auto px-6 relative z-10">
-        <div className="glass-panel p-12 rounded-[3rem]">
+        <div className="glass-panel p-12 rounded-[3rem] relative overflow-hidden">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-black uppercase mb-4">Kalkulačka <span className={`text-transparent bg-clip-text bg-linear-to-r from-primary to-secondary ${colors.icon}`}>ceny</span></h2>
             <p className="text-white/60">Spočítejte si přesnou cenu pronájmu včetně slev za delší výpůjčku.</p>
@@ -755,11 +756,41 @@ const Calculator = () => {
               <p className="text-xs text-white/40 uppercase font-bold mb-8">
                 {packageType === 'combo' ? "Cena za spojení Medium a Big" : days >= 7 ? "Včetně 30% slevy" : days >= 3 ? "Včetně 15% slevy" : "Základní cena"}
               </p>
-              <Link to="/kontakt" state={{ packageType: packageType === 'mini' ? 'Mini' : packageType === 'medium' ? 'Medium' : packageType === 'big' ? 'Big' : '', days, delivery }} className={`w-full py-4 ${colors.bg} text-background font-black rounded-2xl uppercase tracking-widest ${colors.glow} hover:scale-105 transition-all`}>
+              <button onClick={() => setShowForm(true)} className={`w-full py-4 ${colors.bg} text-background font-black rounded-2xl uppercase tracking-widest ${colors.glow} hover:scale-105 transition-all`}>
                 Poptat termín
-              </Link>
+              </button>
             </div>
           </div>
+
+          {/* Form Overlay */}
+          <AnimatePresence>
+            {showForm && (
+              <motion.div
+                initial={{ x: "-100%" }}
+                animate={{ x: 0 }}
+                exit={{ x: "-100%" }}
+                transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                className="absolute inset-0 bg-surface/95 backdrop-blur-xl z-50 flex flex-col rounded-[3rem] overflow-hidden"
+              >
+                <div className="p-8 flex justify-between items-center border-b border-white/10">
+                  <h4 className="font-black uppercase text-2xl">Poptat termín</h4>
+                  <button
+                    onClick={() => setShowForm(false)}
+                    className="p-2 bg-white/5 hover:bg-white/10 rounded-full transition-colors"
+                  >
+                    <X className="w-6 h-6" />
+                  </button>
+                </div>
+                <div className="flex-1 overflow-y-auto p-8 scrollbar-hide">
+                  <ContactForm
+                    prefilledPackage={packageType === 'mini' ? 'Mini' : packageType === 'medium' ? 'Medium' : packageType === 'big' ? 'Big' : ''}
+                    prefilledDays={days.toString()}
+                    prefilledDelivery={delivery}
+                  />
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
     </section>
