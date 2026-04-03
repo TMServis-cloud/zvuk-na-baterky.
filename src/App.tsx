@@ -1235,6 +1235,7 @@ const Footer = () => {
           <div className="flex gap-6">
             <Link to="/obchodni-podminky" className="hover:text-white transition-colors">Obchodní podmínky</Link>
             <Link to="/ochrana-osobnich-udaju" className="hover:text-white transition-colors">Ochrana údajů</Link>
+            <button onClick={() => window.dispatchEvent(new Event('open-cookie-settings'))} className="hover:text-white transition-colors">Nastavení cookies</button>
           </div>
         </div>
       </div>
@@ -1322,6 +1323,9 @@ const CookieBanner = () => {
     const consent = localStorage.getItem('cookie_consent');
     if (!consent) setVisible(true);
     if (consent === 'all') loadTrackingScripts();
+    const handler = () => setVisible(true);
+    window.addEventListener('open-cookie-settings', handler);
+    return () => window.removeEventListener('open-cookie-settings', handler);
   }, []);
 
   const acceptAll = () => {
