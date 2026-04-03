@@ -1026,7 +1026,7 @@ const ContactForm = ({ prefilledPackage = "", prefilledDays = "1", prefilledDeli
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="grid md:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-6">
         <div className="space-y-2">
           <label className="text-xs font-black uppercase tracking-widest text-white/40 ml-1">Jméno *</label>
           <input required type="text" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 focus:border-primary outline-hidden transition-all" placeholder="Jan Novák" />
@@ -1037,7 +1037,7 @@ const ContactForm = ({ prefilledPackage = "", prefilledDays = "1", prefilledDeli
         </div>
       </div>
       
-      <div className="grid md:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-6">
         <div className="space-y-2">
           <label className="text-xs font-black uppercase tracking-widest text-white/40 ml-1">Telefon</label>
           <input required type="tel" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 focus:border-primary outline-hidden transition-all" placeholder="+420 123 456 789" />
@@ -1053,7 +1053,7 @@ const ContactForm = ({ prefilledPackage = "", prefilledDays = "1", prefilledDeli
         </div>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-6">
         <div className="space-y-2">
           <label className="text-xs font-black uppercase tracking-widest text-white/40 ml-1">Počet dní</label>
           <input type="number" min="1" value={formData.days} onChange={e => setFormData({...formData, days: e.target.value})} className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 focus:border-primary outline-hidden transition-all" />
