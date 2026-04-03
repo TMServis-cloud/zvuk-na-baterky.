@@ -400,7 +400,7 @@ const PackageCard: React.FC<{ pkg: any, index: number }> = ({ pkg, index }) => {
             </div>
             
             <div className="flex-1 overflow-y-auto p-8 scrollbar-hide">
-              <ContactForm prefilledPackage={pkg.id === "mini" ? "Mini" : pkg.id === "medium" ? "Medium" : "Big"} prefilledDays={days.toString()} />
+              <ContactForm prefilledPackage={pkg.id === "mini" ? "Mini" : pkg.id === "medium" ? "Medium" : "Big"} prefilledDays={days.toString()} prefilledPrice={days > 10 ? 'CENA NA VYŽÁDÁNÍ' : calculatePrice().toString()} />
             </div>
           </motion.div>
         )}
@@ -477,7 +477,7 @@ const Packages = () => {
       speakers: "1x Lamax BoomBox 500",
       power: "100W",
       bestFor: "Menší oslavy do 50 lidí",
-      features: ["Bluetooth 5.0", "IPX4 Voděodolnost", "LED Světelné efekty", "Drátový mikrofon"],
+      features: ["Bluetooth 5.0", "IPX4 Voděodolnost", "LED Světelné efekty", "Drátový mikrofon", "DPD doručení 500 Kč / Odvoz 750 Kč"],
       color: "from-primary/20",
       image: "/lamax.jpeg",
       details: [
@@ -526,7 +526,7 @@ const Packages = () => {
       speakers: "1x JBL PartyBox 120",
       power: "160W",
       bestFor: "Střední akce 100 lidí",
-      features: ["Auracast propojení reproduktorů", "IPX4 Voděodolnost", "Bluetooth 5.4", "Bezdrátový mikrofon"],
+      features: ["Auracast propojení reproduktorů", "IPX4 Voděodolnost", "Bluetooth 5.4", "Bezdrátový mikrofon", "DPD doručení 500 Kč / Odvoz 750 Kč"],
       color: "from-secondary/20",
       popular: true,
       image: "/input_file_0.png",
@@ -580,7 +580,7 @@ const Packages = () => {
       speakers: "1x JBL PartyBox 320",
       power: "240W",
       bestFor: "Větší akce, párty a svadby.",
-      features: ["Auracast propojení reproduktorů", "IPX4 Voděodolnost", "Bluetooth 5.4", "Bezdrátový mikrofon"],
+      features: ["Auracast propojení reproduktorů", "IPX4 Voděodolnost", "Bluetooth 5.4", "Bezdrátový mikrofon", "DPD doručení 500 Kč / Odvoz 750 Kč"],
       color: "from-tertiary/20",
       image: "/input_file_1.png",
       details: [
@@ -649,7 +649,7 @@ const Packages = () => {
 const Calculator = () => {
   const [days, setDays] = useState(1);
   const [packageType, setPackageType] = useState("medium");
-  const [delivery, setDelivery] = useState(false);
+  const [delivery, setDelivery] = useState<"none" | "dpd" | "personal">("none");
   const [showForm, setShowForm] = useState(false);
 
   const prices = {
@@ -676,7 +676,8 @@ const Calculator = () => {
     if (days >= 3) base *= 0.85;
     if (days >= 7) base *= 0.7;
     
-    if (delivery) base += 500;
+    if (delivery === "dpd") base += 500;
+    if (delivery === "personal") base += 750;
     
     return Math.round(base);
   };
@@ -733,17 +734,24 @@ const Calculator = () => {
                 </div>
               </div>
 
-              <div className="flex items-center justify-between p-4 rounded-2xl bg-white/5 border border-white/10">
-                <div className="flex items-center gap-3">
-                  <Truck className={`w-5 h-5 ${colors.text} ${colors.icon} transition-colors`} />
-                  <span className="font-bold text-sm uppercase">Dovoz na místo (Praha)</span>
+              <div>
+                <label className="block text-xs font-black uppercase tracking-widest text-white/40 mb-4">Doprava</label>
+                <div className="grid grid-cols-3 gap-2">
+                  {([
+                    { value: "none", label: "Vlastní", sublabel: "Zdarma" },
+                    { value: "dpd", label: "DPD", sublabel: "500 Kč" },
+                    { value: "personal", label: "Odvoz", sublabel: "750 Kč" }
+                  ] as const).map(({ value, label, sublabel }) => (
+                    <button
+                      key={value}
+                      onClick={() => setDelivery(value)}
+                      className={`py-3 px-2 rounded-xl border font-bold text-xs transition-all flex flex-col items-center gap-1 ${delivery === value ? `${colors.bg} text-background ${colors.border}` : `bg-white/5 border-white/10 text-white/70 hover:border-white/30`}`}
+                    >
+                      <span className="uppercase">{label}</span>
+                      <span className={`text-[10px] font-normal ${delivery === value ? "opacity-70" : "text-white/40"}`}>{sublabel}</span>
+                    </button>
+                  ))}
                 </div>
-                <button 
-                  onClick={() => setDelivery(!delivery)}
-                  className={`w-12 h-6 rounded-full transition-all relative ${delivery ? `${colors.bg} ${colors.glow}` : "bg-white/10"}`}
-                >
-                  <div className={`absolute top-1 w-4 h-4 rounded-full bg-white transition-all ${delivery ? "left-7" : "left-1"}`} />
-                </button>
               </div>
             </div>
 
@@ -786,6 +794,7 @@ const Calculator = () => {
                     prefilledPackage={packageType === 'mini' ? 'Mini' : packageType === 'medium' ? 'Medium' : packageType === 'big' ? 'Big' : ''}
                     prefilledDays={days.toString()}
                     prefilledDelivery={delivery}
+                    prefilledPrice={packageType === 'combo' ? 'CENA NA VYŽÁDÁNÍ' : calculateTotal().toString()}
                   />
                 </div>
               </motion.div>
@@ -972,7 +981,7 @@ const FAQ = () => {
   );
 };
 
-const ContactForm = ({ prefilledPackage = "", prefilledDays = "1", prefilledDelivery = false }: { prefilledPackage?: string, prefilledDays?: string, prefilledDelivery?: boolean }) => {
+const ContactForm = ({ prefilledPackage = "", prefilledDays = "1", prefilledDelivery = "none", prefilledPrice = "" }: { prefilledPackage?: string, prefilledDays?: string, prefilledDelivery?: "none" | "dpd" | "personal", prefilledPrice?: string }) => {
   const location = useLocation();
   const state = location.state as any;
 
@@ -983,7 +992,8 @@ const ContactForm = ({ prefilledPackage = "", prefilledDays = "1", prefilledDeli
     phone: "",
     packageType: state?.packageType || prefilledPackage,
     days: state?.days?.toString() || prefilledDays,
-    delivery: state?.delivery ?? prefilledDelivery,
+    delivery: (state?.delivery ?? prefilledDelivery) as "none" | "dpd" | "personal",
+    price: prefilledPrice,
     message: ""
   });
 
@@ -1000,7 +1010,7 @@ const ContactForm = ({ prefilledPackage = "", prefilledDays = "1", prefilledDeli
       
       if (res.ok) {
         setStatus("success");
-        setFormData({ name: "", email: "", phone: "", packageType: "", days: "1", delivery: false, message: "" });
+        setFormData({ name: "", email: "", phone: "", packageType: "", days: "1", delivery: "none", price: "", message: "" });
       } else {
         setStatus("error");
       }
@@ -1024,8 +1034,36 @@ const ContactForm = ({ prefilledPackage = "", prefilledDays = "1", prefilledDeli
     );
   }
 
+  const deliveryLabel = formData.delivery === 'dpd' ? 'DPD doručení — 500 Kč' : formData.delivery === 'personal' ? 'Odvoz na místo — 750 Kč' : 'Vlastní odběr — zdarma';
+  const priceDisplay = formData.price ? (isNaN(Number(formData.price)) ? formData.price : `${Number(formData.price).toLocaleString('cs-CZ')} Kč`) : null;
+
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
+      {priceDisplay && (
+        <div className="p-5 rounded-2xl bg-white/5 border border-white/10 space-y-3">
+          <p className="text-xs font-black uppercase tracking-widest text-white/40">Vaše konfigurace</p>
+          <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-sm">
+            {formData.packageType && (
+              <div className="flex justify-between gap-2">
+                <span className="text-white/40">Balíček</span>
+                <span className="font-bold">{formData.packageType}</span>
+              </div>
+            )}
+            <div className="flex justify-between gap-2">
+              <span className="text-white/40">Počet dní</span>
+              <span className="font-bold">{formData.days}</span>
+            </div>
+            <div className="flex justify-between gap-2">
+              <span className="text-white/40">Doprava</span>
+              <span className="font-bold">{deliveryLabel}</span>
+            </div>
+            <div className="flex justify-between gap-2">
+              <span className="text-white/40">Odh. cena</span>
+              <span className="font-bold text-primary">{priceDisplay}</span>
+            </div>
+          </div>
+        </div>
+      )}
       <div className="grid lg:grid-cols-2 gap-6">
         <div className="space-y-2">
           <label className="text-xs font-black uppercase tracking-widest text-white/40 ml-1">Jméno *</label>
@@ -1058,13 +1096,21 @@ const ContactForm = ({ prefilledPackage = "", prefilledDays = "1", prefilledDeli
           <label className="text-xs font-black uppercase tracking-widest text-white/40 ml-1">Počet dní</label>
           <input type="number" min="1" value={formData.days} onChange={e => setFormData({...formData, days: e.target.value})} className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 focus:border-primary outline-hidden transition-all" />
         </div>
-        <div className="space-y-2 flex flex-col justify-center pt-6">
+        <div className="space-y-3">
+          <label className="text-xs font-black uppercase tracking-widest text-white/40 ml-1">Doprava</label>
           <label className="flex items-center gap-3 cursor-pointer group">
-            <div className={`w-6 h-6 rounded border flex items-center justify-center transition-all ${formData.delivery ? 'bg-primary border-primary text-background' : 'border-white/20 group-hover:border-white/40'}`}>
-              {formData.delivery && <Check className="w-4 h-4" />}
+            <div className={`w-6 h-6 rounded border flex items-center justify-center transition-all shrink-0 ${formData.delivery === 'dpd' ? 'bg-primary border-primary text-background' : 'border-white/20 group-hover:border-white/40'}`}>
+              {formData.delivery === 'dpd' && <Check className="w-4 h-4" />}
             </div>
-            <span className="text-sm font-bold uppercase tracking-widest text-white/80 group-hover:text-white transition-colors">Mám zájem o dovoz</span>
-            <input type="checkbox" className="hidden" checked={formData.delivery} onChange={e => setFormData({...formData, delivery: e.target.checked})} />
+            <span className="text-sm font-bold uppercase tracking-widest text-white/80 group-hover:text-white transition-colors">DPD doručení — 500 Kč</span>
+            <input type="checkbox" className="hidden" checked={formData.delivery === 'dpd'} onChange={e => setFormData({...formData, delivery: e.target.checked ? 'dpd' : 'none'})} />
+          </label>
+          <label className="flex items-center gap-3 cursor-pointer group">
+            <div className={`w-6 h-6 rounded border flex items-center justify-center transition-all shrink-0 ${formData.delivery === 'personal' ? 'bg-primary border-primary text-background' : 'border-white/20 group-hover:border-white/40'}`}>
+              {formData.delivery === 'personal' && <Check className="w-4 h-4" />}
+            </div>
+            <span className="text-sm font-bold uppercase tracking-widest text-white/80 group-hover:text-white transition-colors">Odvoz na místo — 750 Kč</span>
+            <input type="checkbox" className="hidden" checked={formData.delivery === 'personal'} onChange={e => setFormData({...formData, delivery: e.target.checked ? 'personal' : 'none'})} />
           </label>
         </div>
       </div>

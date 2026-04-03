@@ -12,7 +12,7 @@ async function startServer() {
   // API Route for sending email
   app.post('/api/send-email', async (req, res) => {
     try {
-      const { name, email, phone, packageType, days, delivery, message } = req.body;
+      const { name, email, phone, packageType, days, delivery, price, message } = req.body;
 
       // Setup nodemailer with iCloud SMTP
       // Note: User must provide their iCloud email and app-specific password in .env
@@ -36,7 +36,8 @@ Email: ${email}
 Telefon: ${phone || 'Neuveden'}
 Balíček: ${packageType || 'Neuveden'}
 Počet dní: ${days || 'Neuveden'}
-Dovoz: ${delivery ? 'Ano' : 'Ne'}
+Doprava: ${delivery === 'dpd' ? 'DPD (500 Kč)' : delivery === 'personal' ? 'Odvoz na místo (750 Kč)' : 'Bez dopravy'}
+Odhadovaná cena: ${price || 'Neuvedena'}
 
 Zpráva:
 ${message}
