@@ -1042,16 +1042,18 @@ const ContactForm = ({ prefilledPackage = "", prefilledDays = "1", prefilledDeli
       {priceDisplay && (
         <div className="p-5 rounded-2xl bg-white/5 border border-white/10 space-y-3">
           <p className="text-xs font-black uppercase tracking-widest text-white/40">Vaše konfigurace</p>
-          <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-sm">
-            {formData.packageType && (
+          <div className="flex flex-col gap-2 text-sm">
+            <div className="grid grid-cols-2 gap-x-6 gap-y-2">
+              {formData.packageType && (
+                <div className="flex justify-between gap-2">
+                  <span className="text-white/40">Balíček</span>
+                  <span className="font-bold">{formData.packageType}</span>
+                </div>
+              )}
               <div className="flex justify-between gap-2">
-                <span className="text-white/40">Balíček</span>
-                <span className="font-bold">{formData.packageType}</span>
+                <span className="text-white/40">Počet dní</span>
+                <span className="font-bold">{formData.days}</span>
               </div>
-            )}
-            <div className="flex justify-between gap-2">
-              <span className="text-white/40">Počet dní</span>
-              <span className="font-bold">{formData.days}</span>
             </div>
             <div className="flex justify-between gap-2">
               <span className="text-white/40">Doprava</span>
