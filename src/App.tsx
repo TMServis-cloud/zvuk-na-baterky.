@@ -762,7 +762,7 @@ const Calculator = () => {
                 {packageType !== 'combo' && <span className={`text-2xl font-bold ${colors.text} transition-colors`}>Kč</span>}
               </div>
               <p className="text-xs text-white/40 uppercase font-bold mb-8">
-                {packageType === 'combo' ? "Cena za spojení Medium a Big" : days >= 7 ? "Včetně 30% slevy" : days >= 3 ? "Včetně 15% slevy" : "Základní cena"}
+                {packageType === 'combo' ? "Cena za spojení Medium a Big" : days >= 7 ? "Včetně 30% slevy · s DPH" : days >= 3 ? "Včetně 15% slevy · s DPH" : "Základní cena · s DPH"}
               </p>
               <button onClick={() => setShowForm(true)} className={`w-full py-4 ${colors.bg} text-background font-black rounded-2xl uppercase tracking-widest ${colors.glow} hover:scale-105 transition-all`}>
                 Poptat termín
@@ -1060,7 +1060,7 @@ const ContactForm = ({ prefilledPackage = "", prefilledDays = "1", prefilledDeli
               <span className="font-bold">{deliveryLabel}</span>
             </div>
             <div className="flex justify-between gap-2">
-              <span className="text-white/40">Odh. cena</span>
+              <span className="text-white/40">Odh. cena s DPH</span>
               <span className="font-bold text-primary">{priceDisplay}</span>
             </div>
           </div>
@@ -1293,6 +1293,86 @@ const TermsOfService = () => {
   );
 };
 
+// --- Cookie Banner ---
+
+const CookieBanner = () => {
+  const [visible, setVisible] = useState(false);
+
+  const loadTrackingScripts = () => {
+    if (!document.getElementById('ga-script')) {
+      const s = document.createElement('script');
+      s.id = 'ga-script';
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID';
+      document.head.appendChild(s);
+      const i = document.createElement('script');
+      i.id = 'ga-init';
+      i.text = `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','GA_MEASUREMENT_ID');`;
+      document.head.appendChild(i);
+    }
+    if (!document.getElementById('meta-pixel')) {
+      const p = document.createElement('script');
+      p.id = 'meta-pixel';
+      p.text = `!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','META_PIXEL_ID');fbq('track','PageView');`;
+      document.head.appendChild(p);
+    }
+  };
+
+  useEffect(() => {
+    const consent = localStorage.getItem('cookie_consent');
+    if (!consent) setVisible(true);
+    if (consent === 'all') loadTrackingScripts();
+  }, []);
+
+  const acceptAll = () => {
+    localStorage.setItem('cookie_consent', 'all');
+    loadTrackingScripts();
+    setVisible(false);
+  };
+
+  const acceptNecessary = () => {
+    localStorage.setItem('cookie_consent', 'necessary');
+    setVisible(false);
+  };
+
+  return (
+    <AnimatePresence>
+      {visible && (
+        <motion.div
+          initial={{ y: 40, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: 40, opacity: 0 }}
+          transition={{ type: "spring", damping: 25, stiffness: 200 }}
+          className="fixed bottom-4 left-4 right-4 z-[100] flex justify-center"
+        >
+          <div className="w-full max-w-3xl glass-panel rounded-2xl border border-white/10 p-6 flex flex-col md:flex-row gap-5 items-start md:items-center shadow-2xl">
+            <div className="flex-1 space-y-1">
+              <p className="font-black uppercase tracking-widest text-sm">Používáme cookies</p>
+              <p className="text-white/50 text-xs leading-relaxed">
+                Údaje z poptávkového formuláře odesíláme pouze e-mailem — neukládáme je do žádné databáze. Pro analýzu návštěvnosti používáme <span className="text-white/70">Google Analytics</span> a <span className="text-white/70">Meta Pixel</span>. Svůj souhlas můžete kdykoli změnit.
+              </p>
+            </div>
+            <div className="flex gap-3 shrink-0 w-full md:w-auto">
+              <button
+                onClick={acceptNecessary}
+                className="flex-1 md:flex-none px-5 py-2.5 text-xs font-bold uppercase tracking-widest border border-white/20 rounded-xl hover:border-white/40 transition-colors"
+              >
+                Pouze nezbytné
+              </button>
+              <button
+                onClick={acceptAll}
+                className="flex-1 md:flex-none px-5 py-2.5 text-xs font-bold uppercase tracking-widest bg-primary text-background rounded-xl sonic-glow hover:brightness-110 transition-all"
+              >
+                Přijmout vše
+              </button>
+            </div>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+};
+
 // --- Main App ---
 
 const Home = () => {
@@ -1320,6 +1400,7 @@ export default function App() {
           <Route path="/obchodni-podminky" element={<TermsOfService />} />
         </Routes>
         <Footer />
+        <CookieBanner />
       </div>
     </BrowserRouter>
   );
