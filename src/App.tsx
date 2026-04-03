@@ -1235,7 +1235,7 @@ const Footer = () => {
           <div className="flex gap-6">
             <Link to="/obchodni-podminky" className="hover:text-white transition-colors">Obchodní podmínky</Link>
             <Link to="/ochrana-osobnich-udaju" className="hover:text-white transition-colors">Ochrana údajů</Link>
-            <button onClick={() => window.dispatchEvent(new Event('open-cookie-settings'))} className="hover:text-white transition-colors">Nastavení cookies</button>
+            <button onClick={() => window.dispatchEvent(new Event('open-cookie-settings'))} className="hover:text-white transition-colors">NASTAVENÍ COOKIES</button>
           </div>
         </div>
       </div>
