@@ -1408,21 +1408,27 @@ const Home = () => {
   );
 };
 
+export function AppContent() {
+  return (
+    <div className="selection:bg-primary selection:text-background">
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/kontakt" element={<ContactPage />} />
+        <Route path="/ochrana-osobnich-udaju" element={<PrivacyPolicy />} />
+        <Route path="/obchodni-podminky" element={<TermsOfService />} />
+      </Routes>
+      <Footer />
+      <CookieBanner />
+    </div>
+  );
+}
+
 export default function App() {
   return (
     <BrowserRouter>
       <ScrollToHash />
-      <div className="selection:bg-primary selection:text-background">
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/kontakt" element={<ContactPage />} />
-          <Route path="/ochrana-osobnich-udaju" element={<PrivacyPolicy />} />
-          <Route path="/obchodni-podminky" element={<TermsOfService />} />
-        </Routes>
-        <Footer />
-        <CookieBanner />
-      </div>
+      <AppContent />
     </BrowserRouter>
   );
 }

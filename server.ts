@@ -1,4 +1,5 @@
 import express from 'express';
+import fs from 'fs';
 import nodemailer from 'nodemailer';
 import { createServer as createViteServer } from 'vite';
 import path from 'path';
@@ -63,7 +64,12 @@ ${message}
     const distPath = path.join(process.cwd(), 'dist');
     app.use(express.static(distPath));
     app.get('*', (req, res) => {
-      res.sendFile(path.join(distPath, 'index.html'));
+      const routeFile = path.join(distPath, req.path, 'index.html');
+      if (fs.existsSync(routeFile)) {
+        res.sendFile(routeFile);
+      } else {
+        res.sendFile(path.join(distPath, 'index.html'));
+      }
     });
   }
 
