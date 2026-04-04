@@ -1,3 +1,4 @@
+import compression from 'compression';
 import express from 'express';
 import fs from 'fs';
 import nodemailer from 'nodemailer';
@@ -8,6 +9,7 @@ async function startServer() {
   const app = express();
   const PORT = Number(process.env.PORT) || 3000;
 
+  app.use(compression());
   app.use(express.json());
 
   // API Route for sending email
