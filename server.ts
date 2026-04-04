@@ -9,6 +9,15 @@ async function startServer() {
 
   app.use(express.json());
 
+  // 301 redirect from pujcovnareproduktoru.cz to zvuknabaterky.cz
+  app.use((req, res, next) => {
+    const host = req.headers.host || '';
+    if (host.includes('pujcovnareproduktoru.cz')) {
+      return res.redirect(301, `https://zvuknabaterky.cz${req.originalUrl}`);
+    }
+    next();
+  });
+
   // API Route for sending email
   app.post('/api/send-email', async (req, res) => {
     try {
