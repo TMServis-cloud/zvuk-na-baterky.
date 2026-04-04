@@ -1000,15 +1000,34 @@ const ContactForm = ({ prefilledPackage = "", prefilledDays = "1", prefilledDeli
     message: ""
   });
 
+  const calculateFormPrice = () => {
+    const days = parseInt(formData.days) || 1;
+    const pkg = formData.packageType?.toLowerCase();
+    if (!pkg || pkg === 'nevím / poradit' || pkg === '') return 'CENA NA VYŽÁDÁNÍ';
+    let base = 0;
+    if (pkg === 'mini') {
+      base = days === 1 ? 700 : days === 2 ? 1200 : 1200 + (days - 2) * 550;
+    } else if (pkg === 'medium') {
+      base = days === 1 ? 1000 : days === 2 ? 1500 : 1500 + (days - 2) * 800;
+    } else if (pkg === 'big') {
+      base = days === 1 ? 1200 : days === 2 ? 1800 : 1800 + (days - 2) * 1000;
+    } else {
+      return 'CENA NA VYŽÁDÁNÍ';
+    }
+    if (formData.delivery === 'dpd') base += 500;
+    if (formData.delivery === 'personal') base += 750;
+    return `${base} Kč s DPH`;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("submitting");
-    
+
     try {
       const res = await fetch("/api/send-email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData)
+        body: JSON.stringify({ ...formData, price: calculateFormPrice() })
       });
       
       if (res.ok) {
@@ -1038,7 +1057,7 @@ const ContactForm = ({ prefilledPackage = "", prefilledDays = "1", prefilledDeli
   }
 
   const deliveryLabel = formData.delivery === 'dpd' ? 'DPD doručení — 500 Kč' : formData.delivery === 'personal' ? 'Odvoz na místo — 750 Kč' : 'Vlastní odběr — zdarma';
-  const priceDisplay = formData.price ? (isNaN(Number(formData.price)) ? formData.price : `${Number(formData.price).toLocaleString('cs-CZ')} Kč`) : null;
+  const priceDisplay = formData.packageType ? calculateFormPrice() : null;
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
