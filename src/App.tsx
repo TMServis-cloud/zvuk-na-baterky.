@@ -165,11 +165,12 @@ const Hero = () => {
             <span className="text-[10px] font-black uppercase tracking-[0.3em]">100% Bezdrátový zvuk</span>
           </div>
           
-          <h1 className="text-6xl md:text-9xl font-black tracking-tighter leading-[0.85] mb-8 uppercase">
-            <span className="text-primary neon-text-primary">Pronájem párty reproduktorů</span> <br />
-            <span className="bg-clip-text text-transparent bg-linear-to-b from-primary from-[33%] via-tertiary via-[66%] to-secondary neon-text-gradient">na baterie v Praze a okolí</span>
+          <h1 className="text-6xl md:text-9xl font-black tracking-tighter leading-[0.85] mb-6 uppercase">
+            <span className="bg-clip-text text-transparent bg-linear-to-b from-primary from-[33%] via-tertiary via-[66%] to-secondary neon-text-gradient">Půjč si reproduktor na akci</span>
           </h1>
-          
+
+          <h2 className="text-lg md:text-2xl font-bold text-white/60 mb-8 max-w-2xl normal-case tracking-normal">Vyzvedni v Praze nebo si je nech dovézt po středních Čechách.</h2>
+
           <p className="text-xl md:text-2xl text-white/60 mb-12 max-w-3xl leading-relaxed font-medium">
             Půjčujeme špičkové bateriové reproduktory JBL a další přední značky. Možnost provozu na baterii či ze sítě. Čistý zvuk, pořádné basy, mikrofony v ceně, prostě to nej pro vaši párty či oslavu.
           </p>
