@@ -166,8 +166,8 @@ const Hero = () => {
           </div>
           
           <h1 className="text-6xl md:text-9xl font-black tracking-tighter leading-[0.85] mb-8 uppercase">
-            <span className="text-primary neon-text-primary">Ozvučíme vaši</span> <br />
-            <span className="bg-clip-text text-transparent bg-linear-to-b from-primary from-[33%] via-tertiary via-[66%] to-secondary neon-text-gradient">PÁRTY!</span>
+            <span className="text-primary neon-text-primary">Pronájem párty reproduktorů</span> <br />
+            <span className="bg-clip-text text-transparent bg-linear-to-b from-primary from-[33%] via-tertiary via-[66%] to-secondary neon-text-gradient">na baterie v Praze a okolí</span>
           </h1>
           
           <p className="text-xl md:text-2xl text-white/60 mb-12 max-w-3xl leading-relaxed font-medium">
