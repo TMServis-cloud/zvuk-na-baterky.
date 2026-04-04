@@ -160,13 +160,8 @@ const Hero = () => {
           transition={{ duration: 0.8 }}
           className="flex flex-col items-center"
         >
-          <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/5 border border-white/10 mb-8 backdrop-blur-md">
-            <Zap className="w-4 h-4 text-primary neon-icon-primary" />
-            <span className="text-[10px] font-black uppercase tracking-[0.3em]">100% Bezdrátový zvuk</span>
-          </div>
-          
-          <h1 className="text-6xl md:text-9xl font-black tracking-tighter leading-[0.85] mb-6 uppercase">
-            <span className="bg-clip-text text-transparent bg-linear-to-b from-primary from-[33%] via-tertiary via-[66%] to-secondary neon-text-gradient">Půjč si reproduktor na akci</span>
+          <h1 className="text-6xl md:text-9xl font-black tracking-tighter leading-[0.85] mb-6 uppercase bg-clip-text text-transparent bg-linear-to-r from-primary via-tertiary to-secondary neon-text-gradient">
+            Půjč si reproduktor na akci
           </h1>
 
           <h2 className="text-lg md:text-2xl font-bold text-white/60 mb-8 max-w-2xl normal-case tracking-normal">Vyzvedni v Praze nebo si je nech dovézt po středních Čechách.</h2>
@@ -194,9 +189,9 @@ const Hero = () => {
         >
           <div className="relative aspect-video md:aspect-[21/9] rounded-[4rem] overflow-hidden border border-white/10 shadow-2xl group">
             <AnimatePresence mode="wait">
-              <motion.img 
+              <motion.img
                 key={currentImage}
-                src={images[currentImage]} 
+                src={images[currentImage]}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -207,6 +202,10 @@ const Hero = () => {
               />
             </AnimatePresence>
             <div className="absolute inset-0 bg-linear-to-t from-background via-transparent to-transparent opacity-80" />
+            <div className="absolute top-4 left-4 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-black/50 border border-white/10 backdrop-blur-md z-10">
+              <Zap className="w-4 h-4 text-primary neon-icon-primary" />
+              <span className="text-[10px] font-black uppercase tracking-[0.3em]">100% Bezdrátový zvuk</span>
+            </div>
           </div>
 
           {/* Floating elements */}
