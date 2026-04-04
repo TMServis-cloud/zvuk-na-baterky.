@@ -19,9 +19,16 @@
   body {
     @apply bg-background text-white font-sans selection:bg-primary selection:text-background;
   }
-  
+
   h1, h2, h3, h4, h5, h6 {
     @apply font-display font-black uppercase;
+  }
+
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button {
+    opacity: 1;
+    filter: invert(1) brightness(2);
+    cursor: pointer;
   }
 }
 
