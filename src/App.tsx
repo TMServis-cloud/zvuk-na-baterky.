@@ -164,9 +164,9 @@ const Hero = () => {
             Půjč si reproduktor na akci
           </h1>
 
-          <h2 className="text-lg md:text-2xl font-bold text-white/60 mb-8 max-w-2xl normal-case tracking-normal">Vyzvedni v Praze nebo si je nech dovézt po středních Čechách.</h2>
+          <h2 className="text-lg md:text-2xl font-bold text-white mb-8 max-w-2xl normal-case tracking-normal">Vyzvedni, nebo si nech dovést v Praze i středních Čechách.</h2>
 
-          <p className="text-xl md:text-2xl text-white/60 mb-12 max-w-3xl leading-relaxed font-medium">
+          <p className="text-base md:text-lg text-white/60 mb-12 max-w-3xl leading-relaxed font-medium">
             Půjčujeme špičkové bateriové reproduktory JBL a další přední značky. Možnost provozu na baterii či ze sítě. Čistý zvuk, pořádné basy, mikrofony v ceně, prostě to nej pro vaši párty či oslavu.
           </p>
           
@@ -202,7 +202,7 @@ const Hero = () => {
               />
             </AnimatePresence>
             <div className="absolute inset-0 bg-linear-to-t from-background via-transparent to-transparent opacity-80" />
-            <div className="absolute top-4 right-4 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-black/50 border border-white/10 backdrop-blur-md z-10">
+            <div className="absolute top-4 right-[14%] inline-flex items-center gap-2 px-4 py-2 rounded-full bg-black/50 border border-white/10 backdrop-blur-md z-10">
               <Zap className="w-4 h-4 text-primary neon-icon-primary" />
               <span className="text-[10px] font-black uppercase tracking-[0.3em]">100% Bezdrátový zvuk</span>
             </div>
