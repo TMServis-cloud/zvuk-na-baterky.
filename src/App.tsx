@@ -200,7 +200,7 @@ const Hero = () => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 1.5 }}
-                alt="Party with JBL Speakers" 
+                alt="Pronájem bateriového reproduktoru JBL na párty a oslavu"
                 className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000"
                 referrerPolicy="no-referrer"
               />
@@ -291,8 +291,8 @@ const PackageCard: React.FC<{ pkg: any, index: number }> = ({ pkg, index }) => {
       {/* Package Image */}
       <div className="relative h-56 overflow-hidden">
         <img 
-          src={pkg.image} 
-          alt={pkg.name} 
+          src={pkg.image}
+          alt={pkg.imageAlt || pkg.name}
           className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
           referrerPolicy="no-referrer"
         />
@@ -480,6 +480,7 @@ const Packages = () => {
       features: ["Bluetooth 5.0", "IPX4 Voděodolnost", "LED Světelné efekty", "Drátový mikrofon", "DPD doručení 500 Kč / Odvoz 750 Kč"],
       color: "from-primary/20",
       image: "/lamax.jpeg",
+      imageAlt: "Lamax BoomBox 500 – bateriový reproduktor k pronájmu",
       details: [
         {
           title: "VYBAVENÍ",
@@ -530,6 +531,7 @@ const Packages = () => {
       color: "from-secondary/20",
       popular: true,
       image: "/input_file_0.png",
+      imageAlt: "JBL PartyBox 120 – pronájem 160W reproduktoru s bezdrátovým mikrofonem",
       details: [
         {
           title: "VYBAVENÍ",
@@ -583,6 +585,7 @@ const Packages = () => {
       features: ["Auracast propojení reproduktorů", "IPX4 Voděodolnost", "Bluetooth 5.4", "Bezdrátový mikrofon", "DPD doručení 500 Kč / Odvoz 750 Kč"],
       color: "from-tertiary/20",
       image: "/input_file_1.png",
+      imageAlt: "JBL PartyBox 320 – pronájem 240W reproduktoru pro větší akce a svatby",
       details: [
         {
           title: "VYBAVENÍ",
