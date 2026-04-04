@@ -1304,11 +1304,11 @@ const CookieBanner = () => {
       const s = document.createElement('script');
       s.id = 'ga-script';
       s.async = true;
-      s.src = 'https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID';
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-6FQ18MF726';
       document.head.appendChild(s);
       const i = document.createElement('script');
       i.id = 'ga-init';
-      i.text = `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','GA_MEASUREMENT_ID');`;
+      i.text = `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-6FQ18MF726');`;
       document.head.appendChild(i);
     }
     if (!document.getElementById('meta-pixel')) {
