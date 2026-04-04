@@ -160,7 +160,7 @@ const Hero = () => {
           transition={{ duration: 0.8 }}
           className="flex flex-col items-center"
         >
-          <h1 className="text-6xl md:text-9xl font-black tracking-tighter leading-[0.85] mb-6 uppercase bg-clip-text text-transparent bg-linear-to-r from-primary via-tertiary to-secondary neon-text-gradient">
+          <h1 className="text-6xl md:text-9xl font-black tracking-tighter leading-[0.85] mb-6 uppercase bg-clip-text text-transparent neon-text-gradient" style={{backgroundImage: 'linear-gradient(to bottom, #00F5FF 0%, #00F5FF 40%, #7000FF 65%, #FF00F5 100%)'}}>
             Půjč si reproduktor na akci
           </h1>
 
@@ -202,7 +202,7 @@ const Hero = () => {
               />
             </AnimatePresence>
             <div className="absolute inset-0 bg-linear-to-t from-background via-transparent to-transparent opacity-80" />
-            <div className="absolute top-4 left-4 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-black/50 border border-white/10 backdrop-blur-md z-10">
+            <div className="absolute top-4 right-4 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-black/50 border border-white/10 backdrop-blur-md z-10">
               <Zap className="w-4 h-4 text-primary neon-icon-primary" />
               <span className="text-[10px] font-black uppercase tracking-[0.3em]">100% Bezdrátový zvuk</span>
             </div>
