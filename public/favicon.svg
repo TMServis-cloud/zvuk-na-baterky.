@@ -4,6 +4,11 @@
       <stop offset="0%" stop-color="#001a1f"/>
       <stop offset="100%" stop-color="#000a0d"/>
     </radialGradient>
+    <linearGradient id="wave-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ff00f5"/>
+      <stop offset="50%" stop-color="#7000ff"/>
+      <stop offset="100%" stop-color="#ff00f5"/>
+    </linearGradient>
     <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
       <feGaussianBlur stdDeviation="1.5" result="blur"/>
       <feMerge>
@@ -12,8 +17,8 @@
         <feMergeNode in="SourceGraphic"/>
       </feMerge>
     </filter>
-    <filter id="glow-strong" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+    <filter id="glow-wave" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="1.8" result="blur"/>
       <feMerge>
         <feMergeNode in="blur"/>
         <feMergeNode in="blur"/>
@@ -31,42 +36,41 @@
   <!-- Battery terminal (positive) -->
   <rect x="56" y="24" width="5" height="16" rx="2" fill="#00e5ff" filter="url(#glow)"/>
 
-  <!-- Sound wave path inside battery -->
-  <!-- Wave goes from left to right, peaks in the middle -->
+  <!-- Sound wave — smaller amplitude, pink→purple gradient -->
   <path
     d="M8 32
        L11 32
-       L12.5 26
+       L12.5 29
        L14 32
        L15.5 32
-       L17 22
+       L17 27
        L18.5 32
        L20 32
-       L21.5 18
-       L23 42
-       L24.5 14
-       L26 46
-       L27.5 20
-       L29 38
-       L30.5 16
-       L32 44
-       L33.5 18
-       L35 40
-       L36.5 22
+       L21.5 25
+       L23 37
+       L24.5 22
+       L26 40
+       L27.5 24
+       L29 36
+       L30.5 21
+       L32 39
+       L33.5 23
+       L35 37
+       L36.5 26
        L38 32
-       L39.5 28
-       L41 36
-       L42.5 30
+       L39.5 29
+       L41 35
+       L42.5 31
        L44 32
        L45.5 30
        L47 34
        L48.5 32
        L52 32"
-    stroke="#00e5ff"
+    stroke="url(#wave-grad)"
     stroke-width="1.8"
     stroke-linecap="round"
     stroke-linejoin="round"
     fill="none"
-    filter="url(#glow-strong)"
+    filter="url(#glow-wave)"
   />
 </svg>
