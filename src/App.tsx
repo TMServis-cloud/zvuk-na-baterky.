@@ -655,13 +655,6 @@ const Calculator = () => {
   const [delivery, setDelivery] = useState<"none" | "dpd" | "personal">("none");
   const [showForm, setShowForm] = useState(false);
 
-  const prices = {
-    mini: 1000,
-    medium: 1500,
-    big: 2000,
-    combo: 2500
-  };
-
   const getPackageColors = (type: string) => {
     switch(type) {
       case 'mini': return { text: 'text-primary', bg: 'bg-primary', border: 'border-primary', accent: 'accent-primary', icon: 'neon-icon-primary', glow: 'sonic-glow', hover: 'hover:border-primary', bgOpacity: 'bg-primary/5', borderOpacity: 'border-primary/20' };
@@ -674,15 +667,17 @@ const Calculator = () => {
 
   const calculateTotal = () => {
     if (packageType === "combo") return "CENA NA VYŽÁDÁNÍ";
-    let base = prices[packageType as keyof typeof prices] * days;
-    // Discount for more days
-    if (days >= 3) base *= 0.85;
-    if (days >= 7) base *= 0.7;
-    
+    let base = 0;
+    if (packageType === "mini") {
+      base = days === 1 ? 700 : days === 2 ? 1200 : 1200 + (days - 2) * 550;
+    } else if (packageType === "medium") {
+      base = days === 1 ? 1000 : days === 2 ? 1500 : 1500 + (days - 2) * 800;
+    } else if (packageType === "big") {
+      base = days === 1 ? 1200 : days === 2 ? 1800 : 1800 + (days - 2) * 1000;
+    }
     if (delivery === "dpd") base += 500;
     if (delivery === "personal") base += 750;
-    
-    return Math.round(base);
+    return base;
   };
 
   const colors = getPackageColors(packageType);
@@ -765,7 +760,7 @@ const Calculator = () => {
                 {packageType !== 'combo' && <span className={`text-2xl font-bold ${colors.text} transition-colors`}>Kč</span>}
               </div>
               <p className="text-xs text-white/40 uppercase font-bold mb-8">
-                {packageType === 'combo' ? "Cena za spojení Medium a Big" : days >= 7 ? "Včetně 30% slevy · s DPH" : days >= 3 ? "Včetně 15% slevy · s DPH" : "Základní cena · s DPH"}
+                {packageType === 'combo' ? "Cena za spojení Medium a Big" : "Celková cena · s DPH"}
               </p>
               <button onClick={() => setShowForm(true)} className={`w-full py-4 ${colors.bg} text-background font-black rounded-2xl uppercase tracking-widest ${colors.glow} hover:scale-105 transition-all`}>
                 Poptat termín
