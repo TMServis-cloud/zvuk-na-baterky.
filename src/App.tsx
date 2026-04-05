@@ -160,13 +160,13 @@ const Hero = () => {
           transition={{ duration: 0.8 }}
           className="flex flex-col items-center"
         >
-          <h1 className="text-6xl md:text-9xl font-black tracking-tighter leading-[0.85] mb-6 uppercase bg-clip-text text-transparent neon-text-gradient" style={{backgroundImage: 'linear-gradient(to bottom, #00F5FF 0%, #00F5FF 40%, #7000FF 65%, #FF00F5 100%)'}}>
+          <h1 className="text-4xl sm:text-6xl md:text-9xl font-black tracking-tighter leading-[0.9] md:leading-[0.85] mb-6 uppercase bg-clip-text text-transparent neon-text-gradient text-center" style={{backgroundImage: 'linear-gradient(to bottom, #00F5FF 0%, #00F5FF 40%, #7000FF 65%, #FF00F5 100%)'}}>
             Půjč si reproduktor na akci
           </h1>
 
-          <h2 className="text-lg md:text-2xl font-bold text-white mb-8 max-w-2xl normal-case tracking-normal">Vyzvedni, nebo si nech dovést v Praze i středních Čechách.</h2>
+          <h2 className="text-base sm:text-lg md:text-2xl font-bold text-white mb-8 max-w-2xl normal-case tracking-normal text-center">Vyzvedni, nebo si nech dovést v Praze i středních Čechách.</h2>
 
-          <p className="text-base md:text-lg text-white/60 mb-12 max-w-3xl leading-relaxed font-medium">
+          <p className="text-base md:text-lg text-white/60 mb-12 max-w-3xl leading-relaxed font-medium text-center">
             Půjčujeme špičkové bateriové reproduktory JBL a další přední značky. Možnost provozu na baterii či ze sítě. Čistý zvuk, pořádné basy, mikrofony v ceně, prostě to nej pro vaši párty či oslavu.
           </p>
           
