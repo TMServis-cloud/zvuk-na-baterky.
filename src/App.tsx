@@ -160,7 +160,7 @@ const Hero = () => {
           transition={{ duration: 0.8 }}
           className="flex flex-col items-center"
         >
-          <h1 className="text-4xl sm:text-6xl md:text-9xl font-black tracking-tighter leading-[0.9] md:leading-[0.85] mb-6 uppercase bg-clip-text text-transparent neon-text-gradient text-center" style={{backgroundImage: 'linear-gradient(to bottom, #00F5FF 0%, #00F5FF 40%, #7000FF 65%, #FF00F5 100%)'}}>
+          <h1 className="text-4xl sm:text-6xl md:text-9xl font-black tracking-tighter leading-[1.1] md:leading-[1] mb-6 uppercase bg-clip-text text-transparent neon-text-gradient text-center" style={{backgroundImage: 'linear-gradient(to bottom, #00F5FF 0%, #00F5FF 40%, #7000FF 65%, #FF00F5 100%)'}}>
             Půjč si reproduktor na akci
           </h1>
 
