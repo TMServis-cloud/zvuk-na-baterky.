@@ -26,6 +26,7 @@ import {
   Ruler
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
+import { getRouteMeta, canonicalUrl } from "./seo";
 
 // --- Components ---
 
@@ -1408,9 +1409,33 @@ const Home = () => {
   );
 };
 
+// Při klientské navigaci aktualizuje title, description a canonical (prerender je má už v HTML).
+const RouteMeta = () => {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    const meta = getRouteMeta(pathname);
+    const url = canonicalUrl(pathname);
+    const ogTitle = meta.ogTitle || meta.title;
+    document.title = meta.title;
+    const set = (selector: string, value: string, attr = 'content') => {
+      const el = document.head.querySelector(selector);
+      if (el) el.setAttribute(attr, value);
+    };
+    set('meta[name="description"]', meta.description);
+    set('link[rel="canonical"]', url, 'href');
+    set('meta[property="og:url"]', url);
+    set('meta[property="og:title"]', ogTitle);
+    set('meta[property="og:description"]', meta.description);
+    set('meta[name="twitter:title"]', ogTitle);
+    set('meta[name="twitter:description"]', meta.description);
+  }, [pathname]);
+  return null;
+};
+
 export function AppContent() {
   return (
     <div className="selection:bg-primary selection:text-background">
+      <RouteMeta />
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />

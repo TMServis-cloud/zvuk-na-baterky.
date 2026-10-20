@@ -12,6 +12,25 @@ async function startServer() {
   app.use(compression());
   app.use(express.json());
 
+  // Bezpečnostní hlavičky (bez CSP – web načítá GA a Meta Pixel)
+  app.use((req, res, next) => {
+    res.setHeader('Strict-Transport-Security', 'max-age=31536000');
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+    res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+    res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+    res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=(), payment=()');
+    next();
+  });
+
+  // Jedna kanonická podoba URL: bez koncového lomítka (/kontakt/ → 301 /kontakt)
+  app.use((req, res, next) => {
+    if ((req.method === 'GET' || req.method === 'HEAD') && req.path.length > 1 && req.path.endsWith('/') && !req.path.startsWith('/api/')) {
+      const query = req.url.slice(req.path.length);
+      return res.redirect(301, req.path.replace(/\/+$/, '') + query);
+    }
+    next();
+  });
+
   // API Route for sending email
   app.post('/api/send-email', async (req, res) => {
     try {
@@ -64,7 +83,7 @@ ${message}
     app.use(vite.middlewares);
   } else {
     const distPath = path.join(process.cwd(), 'dist');
-    app.use(express.static(distPath));
+    app.use(express.static(distPath, { redirect: false }));
     app.get('*', (req, res) => {
       const routeFile = path.join(distPath, req.path, 'index.html');
       if (fs.existsSync(routeFile)) {

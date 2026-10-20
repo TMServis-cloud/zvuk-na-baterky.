@@ -10,3 +10,5 @@ export function render(url: string): string {
     </StaticRouter>
   );
 }
+
+export { ROUTE_META, getRouteMeta, canonicalUrl } from './seo';
